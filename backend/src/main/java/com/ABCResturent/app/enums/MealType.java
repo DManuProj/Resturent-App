@@ -3,5 +3,6 @@ package com.ABCResturent.app.enums;
 public enum MealType {
     RICE,
     JUSE,
-    FAST_FOOD
+    BURGER,
+    FRIED_RICE
 }

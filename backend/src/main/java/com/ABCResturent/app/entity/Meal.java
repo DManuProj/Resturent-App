@@ -22,7 +22,7 @@ public class Meal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "meal_id")
-    private Long mealId;
+    private int mealId;
 
     @Column(name = "meal_name", length = 50, nullable = false)
     private  String mealName;
@@ -34,8 +34,11 @@ public class Meal {
     @Column(name = "meal_price", length = 50, nullable = false)
     private  double mealPrice;
 
-    @Column(name = "active_state", columnDefinition = "TINYINT default 1")
-    private boolean active;
+    @Column(name = "meal_qty", length = 50, nullable = false)
+    private  int mealQty;
+
+    @Column(name = "active_state")
+    private boolean active = true;
 
     @Column(name = "created_at", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -46,5 +49,6 @@ public class Meal {
     @Temporal(TemporalType.TIMESTAMP)
     @UpdateTimestamp
     private Date updatedAt;
+
 
 }

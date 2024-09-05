@@ -1,7 +1,6 @@
 package com.ABCResturent.app.entity;
 
 import com.ABCResturent.app.enums.MealType;
-import com.ABCResturent.app.enums.QueryStatus;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,39 +11,40 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.util.Date;
 
+
 @Entity
-@Table(name ="query")
+@Table(name ="offer")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Query {
+public class Offer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "query_id")
-    private int queryId;
+    @Column(name = "offer_id")
+    private int offerId;
 
-    @Column(name = "query_text",nullable = false)
-    private  String queryText;
+    @Column(name = "offer_name", length = 50, nullable = false)
+    private  String offerName;
 
-    @Column(name = "query_subject",nullable = false)
-    private  String querySubject;
+    @Column(name = "offer_description", length = 50, nullable = false)
+    private  String offerDescription;
 
-    @Column(name = "query_response")
-    private String queryResponse;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "query_status", length = 50,nullable = false)
-    private QueryStatus queryStatus = QueryStatus.PENDING;
-
+    @Column(name = "discount_rate", length = 255,nullable = false)
+    private double discountRate;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
+    @JoinColumn(name = "created_user", nullable = false)
     @JsonBackReference
     private User user;
 
-    @Column(name = "responder_id")
-    private Long responderId;
+    @Column(name = "start_date", nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Date startDate;
+
+    @Column(name = "end_date", nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Date endDate;
 
     @Column(name = "created_at", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)

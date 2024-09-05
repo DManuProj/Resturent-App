@@ -72,13 +72,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String deleteUser(Long userId) {
+        if (!userRepo.existsById(userId)) {
+            throw new NotFoundException("no Customer");
+
+        }
         try {
-            if (userRepo.existsById(userId)) {
-                userRepo.deleteById(userId);
-                return "user Deleted Successfully";
-            } else {
-                throw new NotFoundException("no Customer");
-            }
+            userRepo.deleteById(userId);
+            return "user Deleted Successfully";
         }catch (Exception e){
             throw  new InternalServerErrorException("An unexpected error occurred while deleting user");
         }

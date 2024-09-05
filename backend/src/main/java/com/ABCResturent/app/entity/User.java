@@ -1,6 +1,7 @@
 package com.ABCResturent.app.entity;
 
 import com.ABCResturent.app.enums.UserType;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name ="user")
@@ -42,6 +44,18 @@ public class User {
 
     @Column(name = "active_state", columnDefinition = "TINYINT default 1")
     private boolean active;
+
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    private Set<Reservation> reservation;
+
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    private Set<Query> queries;
+
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    private Set<Offer> offers;
 
     @Column(name = "created_at", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)

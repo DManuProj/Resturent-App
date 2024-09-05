@@ -37,7 +37,7 @@ public class UserController {
         List<UserGetResponseDTO> user =  userService.getAllUsers();
 
         return new ResponseEntity<StandardResponse>(
-                new StandardResponse(201, "Success", user), HttpStatus.OK
+                new StandardResponse(200, "Success", user), HttpStatus.OK
         );
     }
 
