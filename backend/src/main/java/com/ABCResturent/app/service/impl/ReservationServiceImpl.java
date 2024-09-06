@@ -60,7 +60,7 @@ public class ReservationServiceImpl implements ReservationService {
             }.getType());
             return reservationDTO;
         } else {
-            throw new NotFoundException("No users found");
+            throw new NotFoundException("No reservations found");
         }
     }
 

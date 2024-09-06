@@ -53,6 +53,10 @@ public class User {
     @JsonManagedReference
     private Set<Query> queries;
 
+    @OneToMany(mappedBy = "customer")
+    @JsonManagedReference
+    private Set<Order> orders;
+
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
     private Set<Offer> offers;
