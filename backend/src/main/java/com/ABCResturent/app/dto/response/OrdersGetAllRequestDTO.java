@@ -17,13 +17,27 @@ import java.util.Set;
 @NoArgsConstructor
 @Data
 public class OrdersGetAllRequestDTO {
-    private int orderId;
+//    private int orderId;
+//    private Date orderDate;
+//    private double total;
+//    private OrderStatus orderStatus;
+//    private User customer;
+//    private User staff;
+
+    private  String  userName;
+    private  String  userAddress;
+    private  String userContact;
+
+    private  String mealName;
+    private  int qty;
+
     private Date orderDate;
     private double total;
-    private OrderStatus orderStatus;
-    private User customer;
-    private List<OrderDetailsRequestDTO> orderDetails;
-    private User staff;
-    private Date createdAt;
-    private Date updatedAt;
+
+//    private int mealItemId;
+//    private  String mealItemName;
+//    private double amount;
+//    private  int qty;
+
+
 }

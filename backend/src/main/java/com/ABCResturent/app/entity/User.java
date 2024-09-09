@@ -35,6 +35,10 @@ public class User {
     @Email
     private String userEmail;
 
+    @Column(name = "user_contact", length = 30, nullable = false, unique = true)
+    @Email
+    private String userContact;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "user_type", length = 30, nullable = false)
     private UserType userType;

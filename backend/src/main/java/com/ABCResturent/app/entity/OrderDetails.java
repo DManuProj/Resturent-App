@@ -18,8 +18,8 @@ public class OrderDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int orderDetailsId;
 
-    @Column(name = "order_item_name", length = 100)
-    private  String orderItemName;
+    @Column(name = "meal_item_name", length = 100)
+    private  String mealItemName;
 
     @Column(name = "qty", length = 100, nullable = false)
     private  int qty;

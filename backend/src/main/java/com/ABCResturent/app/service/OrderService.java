@@ -1,5 +1,6 @@
 package com.ABCResturent.app.service;
 
+import com.ABCResturent.app.dto.paginated.PaginatedOrderDetailsDTO;
 import com.ABCResturent.app.dto.request.OrderSaveRequestDTO;
 import com.ABCResturent.app.dto.request.OrderUpdateRequestDTO;
 import com.ABCResturent.app.dto.response.OrdersGetAllRequestDTO;
@@ -11,5 +12,6 @@ public interface OrderService {
 
     String updateOrder(int orderId, OrderUpdateRequestDTO orderUpdateRequestDTO);
 
-    List<OrdersGetAllRequestDTO> getAllOrders();
+
+    PaginatedOrderDetailsDTO getAllOrders(int size, int page);
 }
