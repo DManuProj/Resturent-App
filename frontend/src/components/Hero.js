@@ -5,8 +5,10 @@ import { GiNoodles } from "react-icons/gi";
 import { FaHamburger } from "react-icons/fa";
 import { GiCakeSlice } from "react-icons/gi";
 import BannerImage from "../assets/home_banner.png";
+import { useNavigate } from "react-router";
 
 const Hero = () => {
+  const navigate = useNavigate();
   const navItems = [
     {
       link: "/rice",
@@ -25,35 +27,53 @@ const Hero = () => {
       icon: <GiCakeSlice />,
     },
   ];
+
   return (
     <div
       id="home"
-      className="section flex px-0 items-center xl:justify-center justify-start flex-wrap"
+      className="section flex gap-5 px-0 items-center xl:justify-center justify-start flex-wrap 
+      bg-white py-20"
     >
-      <div className="flex flex-col items-start gap-10">
-        <div className=" sm:text-[2.5rem] text-[1.8rem] font-bold">
-          Delicious <br /> Food is Waiting <br /> For you
+      <div className="flex flex-col items-start gap-8 max-w-xl">
+        {/* Heading */}
+        <div className="sm:text-[2.5rem] text-[2rem] font-extrabold text-gray-900 drop-shadow-lg">
+          Delicious <br /> Food is Waiting <br /> For You
         </div>
-        <div className=" flex gap-2 items-center">
-          <button className="btn">
+
+        {/* Button */}
+        <div className="flex gap-4 items-center">
+          <button
+            onClick={() => navigate("/menu")}
+            className="bg-yellow-500 text-white px-6 py-3 rounded-lg shadow-md 
+            hover:bg-yellow-600 hover:shadow-lg flex items-center gap-2 transition duration-300 ease-in-out"
+          >
             View Menu <FaArrowRight />
           </button>
         </div>
 
-        <div className="flex md:gap-6 gap-2">
+        {/* Navigation Icons */}
+        <div className="flex md:gap-6 gap-3">
           {navItems.map((item, index) => (
             <div
               key={index}
-              className="bg-black w-12 h-12 text-white flex items-center justify-center md:text-3xl
-            text-xl rounded-md"
+              onClick={() => navigate(item.link)}
+              className="bg-white w-14 h-14 text-yellow-900 flex items-center justify-center 
+              md:text-3xl text-2xl rounded-full shadow-lg cursor-pointer hover:bg-yellow-500 hover:text-black 
+              transform hover:scale-110 transition duration-300 ease-in-out"
             >
               {item.icon}
             </div>
           ))}
         </div>
       </div>
-      <div className="min-w-[200px] md:w-[650px] justify-self-center">
-        <img src={BannerImage} alt="banner-image" />
+
+      {/* Image */}
+      <div className="min-w-[250px] md:w-[600px] justify-self-center mt-8 md:mt-0">
+        <img
+          src={BannerImage}
+          alt="banner-image"
+          className="rounded-lg shadow-xl transition-transform duration-500 ease-in-out hover:scale-105"
+        />
       </div>
     </div>
   );

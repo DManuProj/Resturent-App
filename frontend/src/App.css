@@ -1,0 +1,29 @@
+.leaflet-container {
+    height: 600px !important;
+    border-radius: 2rem;
+}
+
+.cluster-icon {
+    background-color: #333;
+    height: 2em;
+    width: 2em;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    box-shadow: 0 0 0px 5px #fff;
+}
+
+body {
+    background: linear-gradient(to right, #fcd34d, #fbbf24, #fef08a);
+    background-opacity: 0.6;
+    /* Note: `background-opacity` is not a valid CSS property; use rgba colors or add opacity directly to the gradient color values */
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    /* Ensure the body takes up the full viewport height */
+    
+    /* Optional: Prevent scrollbars if you don't want them */
+}

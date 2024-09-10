@@ -1,14 +1,17 @@
 import React from "react";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const HomeLayout = ({ children }) => {
   return (
-    <div className="bg-slate-700 min-h-screen w-11/12 mx-auto p-0">
-      <div>
+    <div className="flex flex-col min-h-screen  w-11/12 mx-auto">
+      <header>
         <Header />
-      </div>
-      <div>{children}</div>
-      <div className="">footer</div>
+      </header>
+      <main className="flex-grow pt-16 ">{children}</main>
+      <footer>
+        <Footer />
+      </footer>
     </div>
   );
 };
