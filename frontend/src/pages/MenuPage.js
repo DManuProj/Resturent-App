@@ -1,32 +1,65 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HomeLayout from "../layouts/HomeLayout";
 import { Tabs, Tab, Pagination } from "@mui/material";
 import mealBackground from "../assets/meals_background.jpg"; // Adjust the path to your asset
 import { Link } from "react-router-dom";
 import { IoMdAdd } from "react-icons/io";
+import axios from "axios";
+import LoadingSpinner from "../components/LoadingSpinenr"; // Fixed import name
+import { Toaster } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { addItemToCart } from "../store/cartSlice";
 
 const MenuPage = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [page, setPage] = useState(1);
+  const [meals, setMeals] = useState([]);
+  const { user, isLoading } = useSelector((state) => state.user);
 
-  const tabs = ["All", "Noodles", "Fried Rices", "Juices", "Cakes"];
-  const itemsPerPage = 6; // Number of items per page(size)
+  const cartItems = useSelector((state) => state.cart.items);
+  const netTotal = useSelector((state) => state.cart.totalAmount);
 
-  const foodItems = {
-    All: [
-      "Item 1",
-      "Item 2",
-      "Item 3",
-      "Item 4",
-      "Item 5",
-      "Item 6",
-      "Item 7",
-      "Item 8",
-    ],
-    Noodles: ["Noodle 1", "Noodle 2", "Noodle 3"],
-    "Fried Rices": ["Fried Rice 1", "Fried Rice 2", "Fried Rice 3"],
-    Juices: ["Juice 1", "Juice 2"],
-    Cakes: ["Cake 1", "Cake 2", "Cake 3"],
+  console.log("cart items" + cartItems);
+  console.log("netTotal" + netTotal);
+
+  const dispatch = useDispatch();
+  // Function to handle adding items to cart
+  const handleAddToCart = (meal) => {
+    dispatch(
+      addItemToCart({
+        id: meal.mealId,
+        name: meal.mealName,
+        price: meal.mealPrice,
+      })
+    );
+  };
+
+  useEffect(() => {
+    const fetchMeals = async () => {
+      try {
+        const response = await axios(
+          "http://localhost:8089/api/v1/meal/get-meals"
+        );
+        setMeals(response.data.data);
+      } catch (error) {
+        console.error("Error fetching meals:", error);
+      }
+    };
+
+    fetchMeals();
+  }, []);
+
+  console.log(meals);
+
+  const tabs = ["All", "NOODLES", "FRIED_RICE", "JUICE", "CAKE"];
+  const itemsPerPage = 6; // Number of items per page
+
+  // Filter meals based on the selected category
+  const getFilteredMeals = (category) => {
+    if (category === "All") {
+      return meals;
+    }
+    return meals.filter((meal) => meal.mealCategory === category);
   };
 
   // Handle tab change
@@ -40,7 +73,9 @@ const MenuPage = () => {
     setPage(value);
   };
 
-  const currentItems = foodItems[tabs[activeTab]].slice(
+  // Get current items based on the active tab and page
+  const filteredMeals = getFilteredMeals(tabs[activeTab]);
+  const currentItems = filteredMeals.slice(
     (page - 1) * itemsPerPage,
     page * itemsPerPage
   );
@@ -48,7 +83,7 @@ const MenuPage = () => {
   return (
     <HomeLayout>
       {/* Background Image Section */}
-      <div className="relative w-full h-auto bg-gray-800">
+      <div className="relative w-full h-auto">
         {/* Background Image */}
         <div
           style={{
@@ -56,15 +91,15 @@ const MenuPage = () => {
             backgroundSize: "cover",
             backgroundPosition: "center",
             width: "100%",
-            height: "60vh", // You can adjust this height
-            display: "flex", // Enable flexbox
-            justifyContent: "center", // Center horizontally
-            alignItems: "center", // Center vertically
+            height: "60vh", // Adjust this height as needed
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
             position: "relative",
           }}
         >
           {/* Overlay for better text visibility */}
-          <div className="absolute inset-0 bg-black opacity-50"></div>
+          <div className="absolute inset-0 bg-yellow-900 opacity-40"></div>
 
           {/* Header Text */}
           <div className="relative z-10 text-white text-center p-8">
@@ -77,80 +112,72 @@ const MenuPage = () => {
       </div>
 
       {/* Tabs for Food Categories */}
-      <div className="bg-gray-800 w-full flex flex-col items-center p-8">
+      <div className="bg-gradient-to-r w-full flex flex-col items-center p-8">
         <Tabs
           value={activeTab}
           onChange={handleTabChange}
           indicatorColor="primary"
           textColor="inherit"
           centered
-          className="relative z-10 mb-8"
+          className="relative z-10 mb-8 text-black font-bold"
         >
           {tabs.map((tab, index) => (
-            <Tab key={index} label={tab} />
+            <Tab
+              key={index}
+              label={tab}
+              className={`text-lg ${
+                activeTab === index ? "text-yellow-600" : "text-gray-800"
+              }`}
+            />
           ))}
         </Tabs>
 
         {/* Food Items */}
-        <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-full mx-auto mb-8 z-10">
-          {currentItems.map((item, index) => (
-            // <div
-            //   key={index}
-            //   className="bg-white p-4 rounded-lg shadow-lg text-center text-gray-800"
-            // >
-            //   {item}
-            // </div>
-            <Link to={``}>
-              <article className="flex transform transition-transform duration-300 hover:scale-105 flex-col justify-between h-full p-3 dark:border-white rounded-lg shadow-lg shadow-gray-700 dark:bg-gray-900">
+        <div className="relative bg-white shadow-lg rounded-lg grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-full mx-auto mb-8 z-10 p-4">
+          {currentItems.map((meal) => (
+            <div key={meal.mealId}>
+              <article className="flex bg-white transform transition-transform duration-300 hover:scale-105 flex-col justify-between h-full p-4 rounded-lg shadow-lg border border-yellow-300">
                 <div className="w-full flex justify-center items-center rounded-lg bg-gray-100 overflow-hidden">
                   <img
                     className="w-full h-48 md:h-60 lg:h-52 object-cover"
-                    src={""}
-                    alt="blog read"
+                    src={meal.mealImage || ""} // Assuming there is an 'image' field
+                    alt={meal.mealName}
                   />
                 </div>
-                <div className="flex dark:text-white gap-2  text-gray-600 mt-4">
-                  <h3 className="text-lg md:text-xl dark:text-white font-semibold leading-6 text-gray-900">
-                    title
+                <div className="flex text-gray-800 gap-2 mt-4">
+                  <h3 className="text-lg md:text-xl font-semibold leading-6">
+                    {meal.mealName}
                   </h3>
                 </div>
                 <div className="flex justify-between items-center mt-4">
-                  <h3 className="text-lg md:text-xl dark:text-white font-semibold leading-6 text-gray-900">
-                    price
+                  <h3 className="text-lg md:text-xl font-semibold leading-6 text-yellow-600">
+                    ${meal.mealPrice}
                   </h3>
-                  <div className=" flex  items-center gap-2 mt-2 dark:text-white text-sm md:text-base leading-6 text-gray-600 line-clamp-3">
-                    add to cart
-                    <IoMdAdd />
+                  <div className="flex cursor-pointer items-center gap-2 mt-2 text-sm md:text-base leading-6">
+                    <span
+                      className="flex items-center gap-1"
+                      onClick={() => handleAddToCart(meal)}
+                    >
+                      Add to Cart
+                      <IoMdAdd className="text-yellow-600" />
+                    </span>
                   </div>
                 </div>
-                {/* <Link to={`/writer/${user?._id}`}>
-          <div className="mt-5 flex items-center gap-4">
-            <img
-              className="h-10 w-10 rounded-full object-cover"
-              src={profileImg}
-              alt="profile"
-            />
-            <div className="text-sm flex flex-col">
-              <p className="font-semibold text-base">{name}</p>
-              <p className="dark:text-white text-gray-800 text-sm leading-6">
-                {role}
-              </p>
-            </div>
-          </div>
-        </Link> */}
               </article>
-            </Link>
+            </div>
           ))}
         </div>
 
         {/* Pagination */}
         <Pagination
-          count={Math.ceil(foodItems[tabs[activeTab]].length / itemsPerPage)}
+          count={Math.ceil(filteredMeals.length / itemsPerPage)}
           page={page}
           onChange={handlePageChange}
-          className="relative z-10 text-white"
+          className="relative z-10 text-yellow-800"
         />
       </div>
+      <Toaster position="bottom-right" />
+      {isLoading && <LoadingSpinner />}
     </HomeLayout>
   );
 };

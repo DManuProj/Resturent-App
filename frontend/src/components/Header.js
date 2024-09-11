@@ -1,13 +1,37 @@
 import React, { useState, useEffect } from "react";
-import { FaHome, FaTools, FaInfoCircle } from "react-icons/fa";
+import { FaHome, FaTools, FaInfoCircle, FaShoppingCart } from "react-icons/fa";
 import { MdLocalOffer } from "react-icons/md";
 import { IoMdPhotos } from "react-icons/io";
 import { useLocation, useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsLoading, signOut } from "../store/userSlice";
+// Import the UserAvatar component
+
+const UserAvatar = ({ user }) => {
+  if (!user) return null; // If no user is available, don't render anything
+
+  // Split the user's name into parts
+  const nameParts = user.userName.trim().split(" ");
+
+  // Get initials or single letter
+  const initials =
+    nameParts.length > 1 ? nameParts[0][0] + nameParts[1][0] : nameParts[0][0];
+
+  return (
+    <div className="flex items-center">
+      <div className="w-10 h-10 flex items-center justify-center bg-gray-400 text-white rounded-full">
+        {initials.toUpperCase()}
+        {}
+      </div>
+    </div>
+  );
+};
 
 const Header = () => {
   const [activeSection, setActiveSection] = useState("");
   const navigate = useNavigate();
-  const location = useLocation();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
 
   // Define the nav items
   const navItems = [
@@ -18,6 +42,13 @@ const Header = () => {
     { name: "About Us", link: "#about", icon: <FaInfoCircle /> },
   ];
 
+  const handleSignOut = () => {
+    dispatch(setIsLoading(true));
+    dispatch(signOut());
+    setTimeout(() => {
+      dispatch(setIsLoading(false));
+    }, 2000);
+  };
   // Handle scroll event
   const handleScroll = () => {
     const scrollPosition = window.scrollY + 100; // Adjust offset if needed
@@ -53,8 +84,8 @@ const Header = () => {
   return (
     <div className="fixed top-0 left-0 w-full z-50 flex items-center bg-opacity-50 backdrop-blur-md justify-between px-16 py-2 bg-gray-800 text-white">
       {/* Logo */}
-      <div className="flex items-center cursor-pointer">
-        <div onClick={() => navigate("/")}>logo</div>
+      <div className="flex items-center cursor-pointer font-extrabold">
+        <div onClick={() => navigate("/")}>ABC Restaurant</div>
       </div>
 
       {/* Navigation Center */}
@@ -79,14 +110,37 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Sign In Button */}
-      <div className="ml-auto">
-        <button
-          onClick={() => navigate("/log-in")}
-          className="bg-black text-white px-6 py-2 rounded-2xl"
-        >
-          Sign In
-        </button>
+      {/* User Controls */}
+      <div className="ml-auto flex items-center gap-4">
+        {user && (
+          <div className="flex items-center gap-4">
+            <div className="flex items-center">
+              <UserAvatar user={user} />
+            </div>
+            <div
+              className="flex items-center"
+              onClick={() => navigate("/checkout")}
+            >
+              <FaShoppingCart className="text-2xl cursor-pointer" />
+            </div>
+            <div className="flex items-center">
+              <button
+                onClick={() => handleSignOut()}
+                className="bg-black text-white px-6 py-2 rounded-2xl"
+              >
+                Sign Out
+              </button>
+            </div>
+          </div>
+        )}
+        {!user && (
+          <button
+            onClick={() => navigate("/log-in")}
+            className="bg-black text-white px-6 py-2 rounded-2xl"
+          >
+            Sign In
+          </button>
+        )}
       </div>
     </div>
   );

@@ -1,9 +1,24 @@
 import React from "react";
+import { FaFacebook } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+import { FaInstagramSquare } from "react-icons/fa";
+import { FaLinkedin } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-800 text-white py-8 px-4 md:px-8">
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+    <footer
+      className="py-8 px-4 md:px-8 relative text-yellow-900 bg-white bg-opacity-80"
+      style={{
+        background: "linear-gradient(to right, #fcd34d, #fbbf24, #fef08a)",
+        borderRadius: "10px", // Add this line to make the corners rounded
+      }}
+    >
+      <div
+        className="absolute inset-0 bg-white opacity-90"
+        aria-hidden="true"
+        style={{ borderRadius: "10px" }} // Add borderRadius here if necessary
+      ></div>
+      <div className="relative container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Contact Information */}
         <div>
           <h2 className="text-lg font-semibold mb-4">Contact Us</h2>
@@ -18,22 +33,34 @@ const Footer = () => {
           <h2 className="text-lg font-semibold mb-4">Quick Links</h2>
           <ul>
             <li className="mb-2">
-              <a href="#menu" className="hover:underline">
+              <a
+                href="#menu"
+                className="hover:underline text-gray-800 hover:text-yellow-700"
+              >
                 Menu
               </a>
             </li>
             <li className="mb-2">
-              <a href="#about" className="hover:underline">
+              <a
+                href="#about"
+                className="hover:underline text-gray-800 hover:text-yellow-700"
+              >
                 About Us
               </a>
             </li>
             <li className="mb-2">
-              <a href="#contact" className="hover:underline">
+              <a
+                href="#contact"
+                className="hover:underline text-gray-800 hover:text-yellow-700"
+              >
                 Contact
               </a>
             </li>
             <li className="mb-2">
-              <a href="#locations" className="hover:underline">
+              <a
+                href="#locations"
+                className="hover:underline text-gray-800 hover:text-yellow-700"
+              >
                 Locations
               </a>
             </li>
@@ -43,25 +70,25 @@ const Footer = () => {
         {/* Social Media */}
         <div>
           <h2 className="text-lg font-semibold mb-4">Follow Us</h2>
-          <div className="flex space-x-4">
-            <a href="https://facebook.com" className="hover:text-blue-500">
-              <i className="fab fa-facebook fa-2x"></i>
+          <div className="flex space-x-4 text-yellow-700">
+            <a href="https://facebook.com" className="hover:text-blue-500 ">
+              <FaFacebook />
             </a>
             <a href="https://twitter.com" className="hover:text-blue-400">
-              <i className="fab fa-twitter fa-2x"></i>
+              <FaXTwitter />
             </a>
             <a href="https://instagram.com" className="hover:text-pink-600">
-              <i className="fab fa-instagram fa-2x"></i>
+              <FaInstagramSquare />
             </a>
             <a href="https://linkedin.com" className="hover:text-blue-700">
-              <i className="fab fa-linkedin fa-2x"></i>
+              <FaLinkedin />
             </a>
           </div>
         </div>
       </div>
 
       {/* Copyright */}
-      <div className="text-center mt-8">
+      <div className="relative text-center mt-8 text-gray-800">
         <p>&copy; 2024 Restaurant. All rights reserved.</p>
       </div>
     </footer>

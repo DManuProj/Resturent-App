@@ -15,25 +15,25 @@ const TextfieldUI = ({ name, icon, ...otherProps }) => {
     sx: {
       color: "white",
       "& .MuiOutlinedInput-input": {
-        color: "white",
-        caretColor: "white",
+        color: "black",
+        caretColor: "black",
         "&::placeholder": {
           color: "rgba(255, 255, 255, 0.7)",
         },
       },
       "& .MuiOutlinedInput-root": {
         "& fieldset": {
-          borderColor: "white",
+          borderColor: "black",
         },
-        "&:hover fieldset": {
-          borderColor: "white",
-        },
+        // "&:hover fieldset": {
+        //   borderColor: "yellow",
+        // },
         "&.Mui-focused fieldset": {
-          borderColor: "white",
+          borderColor: "#fde047",
         },
       },
       "& .MuiInputLabel-root": {
-        color: "white",
+        color: "black",
       },
     },
   };

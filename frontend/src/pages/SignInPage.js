@@ -39,11 +39,11 @@ const SignInPage = () => {
   return (
     <HomeLayout>
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-200 bg-opacity-60">
-        <div className="max-w-md w-full bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
-          <h2 className="text-center text-2xl md:text-3xl font-extrabold text-gray-900 dark:text-white">
-            Welcome to Foodie's Haven
+        <div className="max-w-md w-full bg-white  p-8 rounded-lg shadow-lg">
+          <h2 className="text-center text-2xl md:text-3xl font-extrabold text-gray-900 ">
+            Welcome to ABC Restaurant
           </h2>
-          <p className="text-center text-sm text-gray-600 dark:text-gray-300 mb-6">
+          <p className="text-center text-sm text-black dark:text-gray-300 mb-6">
             Register here to your account to enjoy delicious dishes
           </p>
 
@@ -62,7 +62,7 @@ const SignInPage = () => {
           >
             {({ setFieldValue, values }) => {
               return (
-                <Form className="max-w-md dark:text-white w-full mt-8 space-y-6">
+                <Form className="max-w-md w-full mt-8 space-y-6">
                   <div className="flex flex-col rounded-md shadow-sm -space-y-px gap-4 mb-8">
                     <div className="w-full flex gap-4">
                       <div>
@@ -125,7 +125,7 @@ const SignInPage = () => {
                       <Button
                         label="Create Account"
                         type="submit"
-                        styles="w-full mt-3 sm:text-lg py-2.5 2xl:py-3 px-4 border border-transparent text-sm font-medium rounded-full text-white bg-slate-950 dark:bg-sky-500 hover:bg-sky-700 focus:outline-none  -mt-15"
+                        styles="w-full sm:text-lg py-2.5 2xl:py-3 px-4 border bg-yellow-600 border-transparent text-sm font-medium rounded-full text-white bg-slate-950  focus:outline-none mt-8"
                       />
                     </div>
                   </div>
@@ -134,7 +134,7 @@ const SignInPage = () => {
             }}
           </Formik>
 
-          <div className="flex flex-col items-center mt-3 text-gray-600 dark:text-gray-300">
+          <div className="flex flex-col items-center mt-3 text-gray-600 ">
             <p className="-mt-3">
               Already have an account?
               <Link

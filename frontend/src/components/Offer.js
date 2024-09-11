@@ -17,7 +17,6 @@ const offers = [
     description:
       "Enjoy 20% off on all meals this summer! Cool down with our refreshing beverages.",
     imageUrl: Summer,
-    buttonText: "Claim Offer",
     buttonLink: "/claim-summer-offer",
   },
   {
@@ -40,34 +39,57 @@ const offers = [
 
 const Offer = () => {
   return (
-    <div className="bg-gray-700 min-h-screen  text-white">
+    <div
+      className="min-h-screen"
+      style={{
+        background: "linear-gradient(to right, #fcd34d, #fbbf24, #fef08a)",
+      }}
+    >
       <div className="space-y-16">
         <Swiper
           direction={"horizontal"}
           slidesPerView={1}
           mousewheel={true}
-          modules={[Mousewheel]}
+          modules={[Mousewheel, Pagination]}
         >
           {offers.map((offer, index) => (
-            <SwiperSlide>
+            <SwiperSlide key={index}>
               <div
-                key={index}
-                className={`flex flex-col bg-slate-500 md:flex-row items-center ${
+                className={`flex flex-col bg-opacity-70 md:flex-row items-center ${
                   index % 2 === 1 ? "md:flex-row-reverse" : ""
                 } gap-8`}
               >
-                <div className="w-full md:w-1/2 max-h- flex justify-center">
+                <div className="w-full md:w-1/2 flex justify-center">
                   <img
                     src={offer.imageUrl}
                     alt={offer.title}
-                    className="w-full h-auto object-cover rounded-lg"
+                    className="w-full h-auto object-cover rounded-lg shadow-lg"
                   />
                 </div>
 
-                <div className="w-full md:w-1/2 flex flex-col justify-center items-center text-center h-full">
-                  <h2 className="text-3xl font-semibold mb-4">{offer.title}</h2>
-                  <p className="text-lg mb-4">{offer.description}</p>
-                  <button className="btn">{offer.buttonText}</button>
+                <div
+                  className="w-full md:w-1/2 flex flex-col justify-center items-center text-center h-full p-6"
+                  style={{
+                    backgroundColor: "rgba(255, 255, 255, 0.85)",
+                    borderRadius: "12px",
+                    padding: "20px",
+                    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+                  }}
+                >
+                  <h2 className="text-4xl font-bold text-yellow-900 mb-4">
+                    {offer.title}
+                  </h2>
+                  <p className="text-lg text-yellow-800 mb-6">
+                    {offer.description}
+                  </p>
+                  {offer.title !== "Summer Special" && (
+                    <button
+                      className="bg-yellow-600 hover:bg-yellow-700 text-white py-2 px-6 rounded-lg shadow-md transition-colors"
+                      onClick={() => (window.location.href = offer.buttonLink)}
+                    >
+                      {offer.buttonText}
+                    </button>
+                  )}
                 </div>
               </div>
             </SwiperSlide>

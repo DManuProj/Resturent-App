@@ -7,6 +7,8 @@ import SignInPage from "./pages/SignInPage";
 import LoginPage from "./pages/LoginPage";
 import MenuPage from "./pages/MenuPage";
 import CheckoutPage from "./pages/CheckoutPage";
+import QueryPage from "./pages/QuaryPage";
+import ReservationPage from "./pages/ReservationPage";
 
 function App() {
   const router = createBrowserRouter([
@@ -33,6 +35,14 @@ function App() {
     {
       path: "/checkout",
       element: <CheckoutPage />,
+    },
+    {
+      path: "/make-query",
+      element: <QueryPage />,
+    },
+    {
+      path: "/reservation",
+      element: <ReservationPage />,
     },
   ]);
 

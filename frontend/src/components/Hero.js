@@ -44,8 +44,8 @@ const Hero = () => {
         <div className="flex gap-4 items-center">
           <button
             onClick={() => navigate("/menu")}
-            className="bg-yellow-500 text-white px-6 py-3 rounded-lg shadow-md 
-            hover:bg-yellow-600 hover:shadow-lg flex items-center gap-2 transition duration-300 ease-in-out"
+            className="bg-yellow-600  text-white px-6 py-3 rounded-lg shadow-md 
+            hover:bg-yellow-700 hover:shadow-lg flex items-center gap-2 transition duration-300 ease-in-out"
           >
             View Menu <FaArrowRight />
           </button>

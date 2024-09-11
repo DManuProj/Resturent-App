@@ -4,7 +4,8 @@ import Reservation from "../assets/reservation.png";
 import Wifi from "../assets/wifi.png";
 import Parking from "../assets/parked-car.png"; // Assume you add this icon
 import TakeAway from "../assets/take-away.png"; // Assume you add this icon
-import Outdoor from "../assets/dinner-table.png"; // Assume you add this icon
+import Query from "../assets/query.png"; // Assume you add this icon
+import { useNavigate } from "react-router";
 
 const services = [
   {
@@ -13,7 +14,7 @@ const services = [
     description:
       "Get your food delivered to your doorstep quickly and efficiently.",
     buttonText: "Order Now",
-    buttonLink: "/order", // Add your link for the order page
+    buttonLink: "/menu", // Add your link for the order page
   },
   {
     icon: Reservation,
@@ -22,6 +23,14 @@ const services = [
       "Book a table in advance and enjoy a hassle-free dining experience.",
     buttonText: "Book Now",
     buttonLink: "/reservation", // Add your link for the reservation page
+  },
+  {
+    icon: Query,
+    title: "Customer Inquiries",
+    description:
+      "Have questions or need help? Our staff is here to assist you with anything you need..",
+    buttonText: "Query Now",
+    buttonLink: "/make-query",
   },
   {
     icon: Wifi,
@@ -40,39 +49,33 @@ const services = [
     description:
       "Enjoy exclusive dishes crafted by our expert chefs, available for a limited time.",
   },
-  {
-    icon: Outdoor,
-    title: "Outdoor Seating",
-    description: "Enjoy your meals in our cozy outdoor seating area.",
-  },
 ];
 
 const Service = () => {
+  const navigate = useNavigate();
   return (
-    <div className="min-h-screen flex items-center justify-center  p-8">
+    <div className="min-h-screen flex items-center  justify-center  p-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         {services.map((service, index) => (
           <div
             key={index}
-            className="flex flex-col items-center text-center bg-white p-6 rounded-lg shadow-lg transform transition hover:scale-105 hover:shadow-2xl cursor-pointer"
+            className="flex flex-col items-center text-center   bg-white bg-opacity-80 p-6 rounded-lg shadow-lg transform transition hover:scale-105 hover:shadow-2xl cursor-pointer"
           >
             <img
-              className="w-24 h-24 mb-4"
+              className="w-24 h-24 mb-4 text-yellow-800"
               src={service.icon}
               alt={service.title}
             />
-            <h3 className="text-lg font-semibold mb-2 text-gray-800">
-              {service.title}
-            </h3>
-            <p className="text-gray-600 mb-4">{service.description}</p>
+            <h3 className="text-lg font-semibold mb-2  ">{service.title}</h3>
+            <p className=" mb-4">{service.description}</p>
 
             {service.buttonText && (
-              <a
-                href={service.buttonLink}
-                className="bg-yellow-500 text-white py-2 px-4 rounded-full hover:bg-yellow-600 transition"
+              <button
+                onClick={() => navigate(service.buttonLink)}
+                className="bg-yellow-600 hover:bg-yellow-700 text-white  py-2 px-4 rounded-full transition"
               >
                 {service.buttonText}
-              </a>
+              </button>
             )}
           </div>
         ))}
