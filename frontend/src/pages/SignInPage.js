@@ -3,16 +3,39 @@ import HomeLayout from "../layouts/HomeLayout";
 import TextInput from "../components/formComponents/TextInput";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/ButtonUI";
 import TextfieldUI from "../components/formComponents/TextInput";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsLoading, signIn } from "../store/userSlice";
+import LoadingSpinner from "../components/LoadingSpinenr";
 
 const SignInPage = () => {
   const [showPassword, setShowPassword] = useState(false);
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { isLoading } = useSelector((state) => state.user);
+
+  const initialValues = {
+    userEmail: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    userAddress: "",
+    userContact: "",
+  };
+
+  const defaultInitialValues = {
+    userName: "",
+    userEmail: "",
+    userContact: "",
+    userAddress: "",
+    password: "",
+  };
 
   const toggleShowPassword = () => {
     setShowPassword((prev) => !prev);
@@ -36,6 +59,49 @@ const SignInPage = () => {
     if (score <= 80) return "bg-yellow-500";
     return "bg-green-500";
   };
+
+  const handleSubmit = async (values) => {
+    dispatch(setIsLoading(true));
+    console.log(values);
+    const formData = {
+      userName: values.firstName + " " + values.lastName,
+      userEmail: values.userEmail,
+      userContact: values.userContact,
+      userAddress: values.userAddress,
+      password: values.password,
+      userType: "CUSTOMER",
+    };
+
+    console.log("Form data:", formData);
+    try {
+      const response = await axios.post(
+        "http://localhost:8089/api/v1/user/save",
+        formData
+      );
+
+      console.log(response);
+
+      if (response.data) {
+        toast.success(response.data.message || "Account created successfully");
+
+        dispatch(
+          signIn({
+            user: response.data.data,
+          })
+        );
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
+      } else {
+        toast.error(response.data.message || "Something went wrong");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      dispatch(setIsLoading(false));
+    }
+  };
+
   return (
     <HomeLayout>
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-200 bg-opacity-60">
@@ -48,17 +114,18 @@ const SignInPage = () => {
           </p>
 
           <Formik
-            initialValues={{
-              email: "",
-              password: "",
-            }}
+            initialValues={initialValues || defaultInitialValues}
             validationSchema={Yup.object().shape({
-              email: Yup.string()
+              userEmail: Yup.string()
                 .email("Invalid email")
                 .required("Email is required"),
               password: Yup.string().required("Password is required"),
+              firstName: Yup.string().required("First Name is required"),
+              lastName: Yup.string().required("Last Name is required"),
+              userAddress: Yup.string().required("Address is required"),
+              userContact: Yup.string().required("Contact is required"),
             })}
-            // onSubmit={(values) => handleSubmit(values)}
+            onSubmit={(values) => handleSubmit(values)}
           >
             {({ setFieldValue, values }) => {
               return (
@@ -77,17 +144,17 @@ const SignInPage = () => {
 
                     <div>
                       <p>Contact Number*</p>
-                      <TextfieldUI type="number" name="contact number" />
+                      <TextfieldUI type="number" name="userContact" />
                     </div>
 
                     <div>
                       <p>Address*</p>
-                      <TextfieldUI name="address" />
+                      <TextfieldUI name="userAddress" />
                     </div>
 
                     <div>
                       <p>Email*</p>
-                      <TextfieldUI name="email" />
+                      <TextfieldUI name="userEmail" />
                     </div>
 
                     <div className="relative">
@@ -148,7 +215,7 @@ const SignInPage = () => {
           </div>
         </div>
         <Toaster position="bottom-right" />
-        {/* {isLoading && <LoadingSpinner />} */}
+        {isLoading && <LoadingSpinner />}
       </div>
     </HomeLayout>
   );

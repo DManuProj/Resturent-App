@@ -17,6 +17,7 @@ const userSlice = createSlice({
         userType: action.payload.user.userType,
         userContact: action.payload.user.userContact,
         userAddress: action.payload.user.userAddress,
+        userEmail: action.payload.user.userEmail,
       };
 
       state.user = userData;

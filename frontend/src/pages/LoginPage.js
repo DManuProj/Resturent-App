@@ -44,8 +44,9 @@ const LoginPage = () => {
         // Show success message
         toast.success("Login successful!");
 
-        // Redirect or handle successful login
-        navigate("/"); // Example redirection after successful login
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
       }
     } catch (error) {
       // Show error message

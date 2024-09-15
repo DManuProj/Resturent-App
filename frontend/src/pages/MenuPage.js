@@ -151,7 +151,7 @@ const MenuPage = () => {
                 </div>
                 <div className="flex justify-between items-center mt-4">
                   <h3 className="text-lg md:text-xl font-semibold leading-6 text-yellow-600">
-                    ${meal.mealPrice}
+                    Rs {meal.mealPrice}
                   </h3>
                   <div className="flex cursor-pointer items-center gap-2 mt-2 text-sm md:text-base leading-6">
                     <span

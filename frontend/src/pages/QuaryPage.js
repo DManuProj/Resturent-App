@@ -57,7 +57,7 @@ const QueryPage = () => {
         //     user: response.data.data,
         //   })
         // );
-        setQueries([...queries, ...response.data.data]);
+        setQueries([...response.data.data]);
       }
     } catch (error) {
       toast.error(
@@ -181,7 +181,7 @@ const QueryPage = () => {
                   <TableCell>{query.querySubject}</TableCell>
                   <TableCell>{query.queryText}</TableCell>
                   <TableCell>{query.queryResponse}</TableCell>
-                  <TableCell>{query.queryResponseDate}</TableCell>
+                  <TableCell>{formatDate(query.queryResponseDate)}</TableCell>
                   <TableCell>{query.queryStatus}</TableCell>
                 </TableRow>
               ))}
